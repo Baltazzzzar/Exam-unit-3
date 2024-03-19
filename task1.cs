@@ -12,3 +12,7 @@ int Root(int x)
     return (int)Math.Sqrt(x);
 }
 
+int Cube(int x)
+{
+    return x * x * x;
+}
