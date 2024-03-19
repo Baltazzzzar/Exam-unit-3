@@ -37,6 +37,15 @@ string Greet(string name)
 
 // Task 2
 
+int[] FlattenJaggedArray(int[][] jaggedArray)
+{
+    int[] flattenedArray = new int[0];
+    //1. Test if current element is a number or an array
+    //2. If it's a number, add it to the result array
+    //3. If it's an array, call back to step 1
+    //4. If the array is empty, return to previous array, and go to step 1
+    return flattenedArray;
+}
 
 
 
