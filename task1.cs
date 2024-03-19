@@ -16,3 +16,8 @@ int Cube(int x)
 {
     return x * x * x;
 }
+
+double AreaOfCircle(int r)
+{
+    return Math.PI * r * r;
+}
