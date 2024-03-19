@@ -3,24 +3,24 @@ using System.Collections.Generic;
 
 // Task 1
 
-double Square(double x)
+double Square(double numberToSquare)
 {
-    return x * x;
+    return numberToSquare * numberToSquare;
 }
 
-double Root(double x)
+double Root(double numberToRoot)
 {
-    return Math.Sqrt(x);
+    return Math.Sqrt(numberToRoot);
 }
 
-double Cube(double x)
+double Cube(double numberToCube)
 {
-    return x * x * x;
+    return numberToCube * numberToCube * numberToCube;
 }
 
-double AreaOfCircle(double r)
+double AreaOfCircle(double radius)
 {
-    return Math.PI * r * r;
+    return Math.PI * radius * radius;
 }
 
 double InchToMm(double inch)
@@ -32,6 +32,10 @@ string Greet(string name)
 {
     return $"Good Day, {name}!";
 }
+
+
+
+// Task 2
 
 
 
