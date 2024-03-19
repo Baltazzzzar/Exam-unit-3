@@ -2,22 +2,27 @@
 using System.Collections.Generic;
 
 
-int Square(int x)
+double Square(double x)
 {
     return x * x;
 }
 
-int Root(int x)
+double Root(double x)
 {
-    return (int)Math.Sqrt(x);
+    return Math.Sqrt(x);
 }
 
-int Cube(int x)
+double Cube(double x)
 {
     return x * x * x;
 }
 
-double AreaOfCircle(int r)
+double AreaOfCircle(double r)
 {
     return Math.PI * r * r;
+}
+
+double InchToMm(double inch)
+{
+    return inch * 25.4;
 }
