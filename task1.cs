@@ -26,3 +26,8 @@ double InchToMm(double inch)
 {
     return inch * 25.4;
 }
+
+string Greet(string name)
+{
+    return $"Good Day, {name}!";
+}
