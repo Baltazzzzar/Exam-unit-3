@@ -40,27 +40,35 @@ string Greet(string name)
 
 string fileName = "arrays.json";
 string jsonString = File.ReadAllText(fileName);
-int[][] jaggedArray = JsonSerializer.Deserialize<int[][]>(jsonString);
+JsonElement jsonData = JsonSerializer.Deserialize<JsonElement>(jsonString)!;
 
-List<int> FlattenJaggedArray(int[][] jaggedArray)
+
+List<int> FlattenJaggedArray(JsonElement jaggedArray)
 {
     List<int> flattenedArray = new List<int>();
-    for (int i = 0; i < jaggedArray.Length; i++)
+    if (jaggedArray.ValueKind == JsonValueKind.Array)
     {
-        for (int j = 0; j < jaggedArray[i].Length; j++)
+        foreach (var item in jaggedArray.EnumerateArray())
         {
-            flattenedArray.Add(jaggedArray[i][j]);
+            List<int> sublist = FlattenJaggedArray(item);
+            foreach (int number in sublist)
+            {
+                flattenedArray.Add(number);
+            }
         }
     }
-    //1. Test if current element is a number or an array
-    //2. If it's a number, add it to the result array
-    //3. If it's an array, call back to step 1
-    //4. If the array is empty, return to previous array, and go to step 1
+    else if (jaggedArray.ValueKind == JsonValueKind.Number)
+    {
+        int number = int.Parse(jaggedArray.ToString());
+        flattenedArray.Add(number);
+    }
     return flattenedArray;
 }
 
-List<int> flattenedArray = FlattenJaggedArray(jaggedArray);
+List<int> flattenedArray = FlattenJaggedArray(jsonData);
 Console.WriteLine(string.Join(", ", flattenedArray));
+
+
 
 
 // Testing
