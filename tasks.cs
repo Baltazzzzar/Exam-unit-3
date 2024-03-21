@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 // Task 1
 
@@ -37,9 +38,20 @@ string Greet(string name)
 
 // Task 2
 
-int[] FlattenJaggedArray(int[][] jaggedArray)
+string fileName = "arrays.json";
+string jsonString = File.ReadAllText(fileName);
+int[][] jaggedArray = JsonSerializer.Deserialize<int[][]>(jsonString);
+
+List<int> FlattenJaggedArray(int[][] jaggedArray)
 {
-    int[] flattenedArray = new int[0];
+    List<int> flattenedArray = new List<int>();
+    for (int i = 0; i < jaggedArray.Length; i++)
+    {
+        for (int j = 0; j < jaggedArray[i].Length; j++)
+        {
+            flattenedArray.Add(jaggedArray[i][j]);
+        }
+    }
     //1. Test if current element is a number or an array
     //2. If it's a number, add it to the result array
     //3. If it's an array, call back to step 1
@@ -47,6 +59,8 @@ int[] FlattenJaggedArray(int[][] jaggedArray)
     return flattenedArray;
 }
 
+List<int> flattenedArray = FlattenJaggedArray(jaggedArray);
+Console.WriteLine(string.Join(", ", flattenedArray));
 
 
 // Testing
