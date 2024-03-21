@@ -8,27 +8,22 @@ double Square(double numberToSquare)
 {
     return numberToSquare * numberToSquare;
 }
-
 double Root(double numberToRoot)
 {
     return Math.Sqrt(numberToRoot);
 }
-
 double Cube(double numberToCube)
 {
     return numberToCube * numberToCube * numberToCube;
 }
-
 double AreaOfCircle(double radius)
 {
     return Math.PI * radius * radius;
 }
-
 double InchToMm(double inch)
 {
     return inch * 25.4;
 }
-
 string Greet(string name)
 {
     return $"Good Day, {name}!";
@@ -40,7 +35,7 @@ string Greet(string name)
 
 string fileName = "arrays.json";
 string jsonString = File.ReadAllText(fileName);
-JsonElement jsonData = JsonSerializer.Deserialize<JsonElement>(jsonString)!;
+JsonElement arraysJsonData = JsonSerializer.Deserialize<JsonElement>(jsonString);
 
 
 List<int> FlattenJaggedArray(JsonElement jaggedArray)
@@ -65,11 +60,40 @@ List<int> FlattenJaggedArray(JsonElement jaggedArray)
     return flattenedArray;
 }
 
-List<int> flattenedArray = FlattenJaggedArray(jsonData);
+List<int> flattenedArray = FlattenJaggedArray(arraysJsonData);
 Console.WriteLine(string.Join(", ", flattenedArray));
 
 
+// Task 3
 
+fileName = "nodes.json";
+jsonString = File.ReadAllText(fileName);
+Node nodesJsonData = JsonSerializer.Deserialize<Node>(jsonString);
+
+int FindDeepestLevel(Node node)
+{
+    if (node == null)
+    {
+        return 0;
+    }
+    else
+    {
+        int leftLevel = FindDeepestLevel(node.left);
+        int rightLevel = FindDeepestLevel(node.right);
+        if (leftLevel > rightLevel)
+        {
+            return leftLevel + 1;
+        }
+        else
+        {
+            return rightLevel + 1;
+        }
+    }
+}
+
+
+int deepestLevel = FindDeepestLevel(nodesJsonData);
+Console.WriteLine($"Deepest level is: {deepestLevel}");
 
 // Testing
 
@@ -79,3 +103,11 @@ Testing.Test(8, Cube(2), "Cube of 2");
 Testing.Test(Math.PI * 4, AreaOfCircle(2), "Area of Circle with radius 2");
 Testing.Test(50.8, InchToMm(2), "2 inch to mm");
 Testing.Test("Good Day, John!", Greet("John"), "Greet John");
+
+public class Node
+{
+    public int value { get; set; }
+    public int level { get; set; }
+    public Node left { get; set; }
+    public Node right { get; set; }
+}
