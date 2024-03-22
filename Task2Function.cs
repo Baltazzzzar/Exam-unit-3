@@ -1,9 +1,8 @@
 using System.Text.Json;
 
-
-namespace Functions
+namespace TaskFunctions
 {
-    public class FlattenArrayFunction
+    public class Task2Function
     {
         public List<int> FlattenJaggedArray(JsonElement jaggedArray)
         {

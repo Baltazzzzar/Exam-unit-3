@@ -4,406 +4,86 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using AnsiTools;
-using Functions;
+using TaskFunctions;
 
-// Task 1
-Functions.MathFunctions mathFunctions = new Functions.MathFunctions();
-
-
-// Task 2
-Functions.FlattenArrayFunction flattenArrayFunction = new Functions.FlattenArrayFunction();
-string fileName = "arrays.json";
-string jsonString = File.ReadAllText(fileName);
-JsonElement arraysJsonData = JsonSerializer.Deserialize<JsonElement>(jsonString);
-
-List<int> flattenedArray = flattenArrayFunction.FlattenJaggedArray(arraysJsonData);
-Console.WriteLine(string.Join(", ", flattenedArray));
-
-
-// Task 3
-Functions.SearchFunctions searchFunctions = new Functions.SearchFunctions();
-fileName = "nodes.json";
-jsonString = File.ReadAllText(fileName);
-Node nodesJsonData = JsonSerializer.Deserialize<Node>(jsonString);
-
-int sumOfNodes = mathFunctions.CalculateSumOfNodesValue(nodesJsonData);
-int nodesCount = mathFunctions.CountNodes(nodesJsonData);
-int deepestLevel = searchFunctions.FindDeepestLevel(nodesJsonData);
-Console.WriteLine($"Deepest level is: {deepestLevel}");
-Console.WriteLine($"Sum of nodes is: {sumOfNodes}");
-Console.WriteLine($"Number of nodes is: {nodesCount}");
-
-
-// Task 4
-
-fileName = "books.json";
-jsonString = File.ReadAllText(fileName);
-Books[] booksJsonData = JsonSerializer.Deserialize<Books[]>(jsonString);
-
-List<string> FindBooksStartingWithThe(Books[] books)
+namespace Program
 {
-    List<string> booksStartingWithThe = new List<string>();
-    string the = "The";
-    foreach (Books book in books)
+    class Program
     {
-        for (int i = 0; i < the.Length; i++)
+        static void Main(string[] args)
         {
-            if (the[i] != book.title[i])
+            // Task 1
+            Task1Functions task1Functions = new Task1Functions();
+
+            // Task 2
+            Task2Function task2Function = new Task2Function();
+            string fileName = "arrays.json";
+            string jsonString = File.ReadAllText(fileName);
+            JsonElement arraysJsonData = JsonSerializer.Deserialize<JsonElement>(jsonString);
+
+            List<int> flattenedArray = task2Function.FlattenJaggedArray(arraysJsonData);
+            Console.WriteLine(string.Join(", ", flattenedArray));
+
+
+            // Task 3
+            Task3Functions task3Functions = new Task3Functions();
+            fileName = "nodes.json";
+            jsonString = File.ReadAllText(fileName);
+            Node nodesJsonData = JsonSerializer.Deserialize<Node>(jsonString);
+
+            int sumOfNodes = task3Functions.CalculateSumOfNodesValue(nodesJsonData);
+            int nodesCount = task3Functions.CountNodes(nodesJsonData);
+            int deepestLevel = task3Functions.FindDeepestLevel(nodesJsonData);
+            Console.WriteLine($"Deepest level is: {deepestLevel}");
+            Console.WriteLine($"Sum of nodes is: {sumOfNodes}");
+            Console.WriteLine($"Number of nodes is: {nodesCount}");
+
+
+            // Task 4
+            Task4Functions task4Functions = new Task4Functions();
+            fileName = "books.json";
+            jsonString = File.ReadAllText(fileName);
+            Books[] booksJsonData = JsonSerializer.Deserialize<Books[]>(jsonString);
+
+
+
+            List<string> booksStartingWithThe = task4Functions.FindBooksStartingWithThe(booksJsonData);
+            Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
+            List<string> booksWithAuthorsWithTIntheirName = task4Functions.FindBooksWithAuthorsWithTIntheirName(booksJsonData);
+            Console.WriteLine($"{ANSICodes.Colors.Green} Books written by author with T in their name : {ANSICodes.Reset}" + string.Join(", ", booksWithAuthorsWithTIntheirName));
+            int numberOfBooksWrittenAfter1994 = task4Functions.CountNumberOfBooksPublishedAfter1992(booksJsonData);
+            Console.WriteLine($"{ANSICodes.Colors.Blue} Number of books written after 1994 : {ANSICodes.Reset}" + numberOfBooksWrittenAfter1994);
+            int numberOfBooksWrittenBefore2004 = task4Functions.CountNumberOfBooksPublishedBefore2004(booksJsonData);
+            Console.WriteLine($"{ANSICodes.Colors.Red} Number of books written before 2004 : {ANSICodes.Reset}" + numberOfBooksWrittenBefore2004);
+            List<string> isbnNumbers = task4Functions.FindISBNNumbersFromAuthor(booksJsonData, "Terry Pratchett");
+            Console.WriteLine($"{ANSICodes.Colors.Magenta} ISBN numbers of books written by Terry Pratchett : {ANSICodes.Reset}" + string.Join(", ", isbnNumbers));
+            List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "descending");
+            Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author first name : {ANSICodes.Reset}");
+            foreach (var book in sortedBooksByFirstName)
             {
-                break;
+                Console.WriteLine($"{book.author} , {book.title}");
             }
-            if (i == the.Length - 1)
+            List<Books> sortedBooksByLastName = task4Functions.SortBooksByAuthorLastName(booksJsonData, "ascending");
+            Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author last name : {ANSICodes.Reset}");
+            task4Functions.PrintGroupedBooksByAuthorLastName(task4Functions.SortBooksByAuthorLastName(booksJsonData, "ascending"));
+            Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
+            task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+
+            List<Books> sortedBooksByTitle = task4Functions.SortBooksAlphabeticallyByTitle(booksJsonData, "ascending");
+            Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.Reset}");
+            foreach (var book in sortedBooksByTitle)
             {
-                booksStartingWithThe.Add(book.title);
+                Console.WriteLine($"{book.title} , {book.author}");
             }
-        }
-    }
-    return booksStartingWithThe;
-}
-
-List<string> FindBooksWithAuthorsWithTIntheirName(Books[] books)
-{
-    List<string> booksWithAuthorsWithTIntheirName = new List<string>();
-    foreach (Books book in books)
-    {
-        for (int i = 0; i < book.author.Length; i++)
-        {
-            if (book.author[i] == 't' || book.author[i] == 'T')
+            List<Books> sortedBooksByPublicationYear = task4Functions.SortBooksChronologicallyByPublicationYear(booksJsonData, "ascending");
+            Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by publication year : {ANSICodes.Reset}");
+            foreach (var book in sortedBooksByPublicationYear)
             {
-                booksWithAuthorsWithTIntheirName.Add(book.title);
-            }
-            else if (book.author[i] == '(')
-            {
-                break;
-            }
-        }
-    }
-    return booksWithAuthorsWithTIntheirName;
-}
-
-int CountNumberOfBooksPublishedAfter1992(Books[] books)
-{
-    int count = 0;
-    foreach (Books book in books)
-    {
-        if (book.publication_year > 1992)
-        {
-            count++;
-        }
-    }
-    return count;
-}
-
-int CountNumberOfBooksPublishedBefore2004(Books[] books)
-{
-    int count = 0;
-    foreach (Books book in books)
-    {
-        if (book.publication_year < 2004)
-        {
-            count++;
-        }
-    }
-    return count;
-}
-
-List<string> FindISBNNumbersFromAuthor(string author)
-{
-    List<string> isbnNumbers = new List<string>();
-    foreach (Books book in booksJsonData)
-    {
-        if (book.author == author)
-        {
-            isbnNumbers.Add(book.isbn);
-        }
-    }
-    return isbnNumbers;
-}
-
-List<Books> SortBooksByAuthorFirstName(string order)
-{
-    List<Books> sortedBooks = new List<Books>(booksJsonData);
-    if (order == "ascending")
-    {
-        for (int i = 0; i < sortedBooks.Count; i++)
-        {
-            for (int j = i + 1; j < sortedBooks.Count; j++)
-            {
-                if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) > 0)
-                {
-                    Books temp = sortedBooks[i];
-                    sortedBooks[i] = sortedBooks[j];
-                    sortedBooks[j] = temp;
-                }
+                Console.WriteLine($"{book.title} , {book.author} , {book.publication_year}");
             }
         }
     }
-    else if (order == "descending")
-    {
-        for (int i = 0; i < sortedBooks.Count; i++)
-        {
-            for (int j = i + 1; j < sortedBooks.Count; j++)
-            {
-                if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) < 0)
-                {
-                    Books temp = sortedBooks[i];
-                    sortedBooks[i] = sortedBooks[j];
-                    sortedBooks[j] = temp;
-                }
-            }
-        }
-    }
-    return sortedBooks;
 }
-
-List<Books> SortBooksByAuthorLastName(string order)
-{
-    List<Books> sortedBooks = new List<Books>(booksJsonData);
-    for (int i = 0; i < sortedBooks.Count; i++)
-    {
-        for (int j = i + 1; j < sortedBooks.Count; j++)
-        {
-            if (order == "ascending")
-            {
-                if (sortedBooks[i].author.Split(' ')[1] == "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[1]) > 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-                if (sortedBooks[j].author.Split(' ')[1] == "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[0]) > 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-                if (sortedBooks[i].author.Split(' ')[1] == "(Translated" && sortedBooks[j].author.Split(' ')[1] == "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) > 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-                if (sortedBooks[i].author.Split(' ')[1] != "(Translated" && sortedBooks[j].author.Split(' ')[1] != "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[1]) > 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-            }
-            else if (order == "descending")
-            {
-                if (sortedBooks[i].author.Split(' ')[1] == "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[1]) < 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-                if (sortedBooks[j].author.Split(' ')[1] == "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[0]) < 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-                if (sortedBooks[i].author.Split(' ')[1] == "(Translated" && sortedBooks[j].author.Split(' ')[1] == "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) < 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-                if (sortedBooks[i].author.Split(' ')[1] != "(Translated" && sortedBooks[j].author.Split(' ')[1] != "(Translated")
-                {
-                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[1]) < 0)
-                    {
-                        Books temp = sortedBooks[i];
-                        sortedBooks[i] = sortedBooks[j];
-                        sortedBooks[j] = temp;
-                    }
-                }
-            }
-        }
-    }
-    return sortedBooks;
-}
-
-void PrintGroupedBooksByAuthorLastName(List<Books> sortedBooks)
-{
-    string currentAuthor = sortedBooks[0].author.Split(" ")[1];
-    if (currentAuthor == "(Translated")
-    {
-        Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor}{ANSICodes.Reset}");
-    }
-    else
-    {
-        Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor}{ANSICodes.Reset}");
-    }
-    foreach (Books book in sortedBooks)
-    {
-        if (currentAuthor != book.author.Split(" ")[1])
-        {
-            if (book.author.Split(" ")[1] == "(Translated")
-            {
-                currentAuthor = book.author.Split(" ")[0];
-                Console.WriteLine("");
-                Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor} : {ANSICodes.Reset}");
-                Console.Write($"{book.title} , ");
-            }
-            else
-            {
-                currentAuthor = book.author.Split(" ")[1];
-                Console.WriteLine("");
-                Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor} : {ANSICodes.Reset}");
-                Console.Write($"{book.title} , ");
-            }
-        }
-        else
-        {
-            Console.Write($"{book.title} , ");
-        }
-    }
-    Console.WriteLine("");
-}
-
-void PrintGroupedBooksByAuthorFirstName(List<Books> sortedBooks)
-{
-    string currentAuthor = sortedBooks[0].author.Split(" ")[0];
-    Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor}{ANSICodes.Reset}");
-    foreach (Books book in sortedBooks)
-    {
-        if (currentAuthor != book.author.Split(" ")[0])
-        {
-            currentAuthor = book.author.Split(" ")[0];
-            Console.WriteLine("");
-            Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor} : {ANSICodes.Reset}");
-            Console.Write($"{book.title} , ");
-        }
-        else
-        {
-            Console.Write($"{book.title} , ");
-        }
-    }
-    Console.WriteLine("");
-}
-
-List<Books> SortBooksAlphabeticallyByTitle(string order)
-{
-    List<Books> sortedBooks = new List<Books>(booksJsonData);
-
-    for (int i = 0; i < sortedBooks.Count; i++)
-    {
-        for (int j = i + 1; j < sortedBooks.Count; j++)
-        {
-            if (order == "ascending")
-            {
-                if (sortedBooks[i].title.CompareTo(sortedBooks[j].title) > 0)
-                {
-                    Books temp = sortedBooks[i];
-                    sortedBooks[i] = sortedBooks[j];
-                    sortedBooks[j] = temp;
-                }
-            }
-            else if (order == "descending")
-            {
-                if (sortedBooks[i].title.CompareTo(sortedBooks[j].title) < 0)
-                {
-                    Books temp = sortedBooks[i];
-                    sortedBooks[i] = sortedBooks[j];
-                    sortedBooks[j] = temp;
-                }
-            }
-        }
-    }
-    return sortedBooks;
-}
-
-List<Books> SortBooksChronologicallyByPublicationYear(string order)
-{
-    List<Books> sortedBooks = new List<Books>(booksJsonData);
-
-    for (int i = 0; i < sortedBooks.Count; i++)
-    {
-        for (int j = i + 1; j < sortedBooks.Count; j++)
-        {
-            if (order == "ascending")
-            {
-                if (sortedBooks[i].publication_year > sortedBooks[j].publication_year)
-                {
-                    Books temp = sortedBooks[i];
-                    sortedBooks[i] = sortedBooks[j];
-                    sortedBooks[j] = temp;
-                }
-            }
-            else if (order == "descending")
-            {
-                if (sortedBooks[i].publication_year < sortedBooks[j].publication_year)
-                {
-                    Books temp = sortedBooks[i];
-                    sortedBooks[i] = sortedBooks[j];
-                    sortedBooks[j] = temp;
-                }
-            }
-        }
-    }
-    return sortedBooks;
-}
-
-
-List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
-Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
-List<string> booksWithAuthorsWithTIntheirName = FindBooksWithAuthorsWithTIntheirName(booksJsonData);
-Console.WriteLine($"{ANSICodes.Colors.Green} Books written by author with T in their name : {ANSICodes.Reset}" + string.Join(", ", booksWithAuthorsWithTIntheirName));
-int numberOfBooksWrittenAfter1994 = CountNumberOfBooksPublishedAfter1992(booksJsonData);
-Console.WriteLine($"{ANSICodes.Colors.Blue} Number of books written after 1994 : {ANSICodes.Reset}" + numberOfBooksWrittenAfter1994);
-int numberOfBooksWrittenBefore2004 = CountNumberOfBooksPublishedBefore2004(booksJsonData);
-Console.WriteLine($"{ANSICodes.Colors.Red} Number of books written before 2004 : {ANSICodes.Reset}" + numberOfBooksWrittenBefore2004);
-List<string> isbnNumbers = FindISBNNumbersFromAuthor("Terry Pratchett");
-Console.WriteLine($"{ANSICodes.Colors.Magenta} ISBN numbers of books written by Terry Pratchett : {ANSICodes.Reset}" + string.Join(", ", isbnNumbers));
-List<Books> sortedBooksByFirstName = SortBooksByAuthorFirstName("descending");
-Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author first name : {ANSICodes.Reset}");
-foreach (var book in sortedBooksByFirstName)
-{
-    Console.WriteLine($"{book.author} , {book.title}");
-}
-List<Books> sortedBooksByLastName = SortBooksByAuthorLastName("ascending");
-Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author last name : {ANSICodes.Reset}");
-PrintGroupedBooksByAuthorLastName(SortBooksByAuthorLastName("ascending"));
-Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
-PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
-
-List<Books> sortedBooksByTitle = SortBooksAlphabeticallyByTitle("ascending");
-Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.Reset}");
-foreach (var book in sortedBooksByTitle)
-{
-    Console.WriteLine($"{book.title} , {book.author}");
-}
-List<Books> sortedBooksByPublicationYear = SortBooksChronologicallyByPublicationYear("ascending");
-Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by publication year : {ANSICodes.Reset}");
-foreach (var book in sortedBooksByPublicationYear)
-{
-    Console.WriteLine($"{book.title} , {book.author} , {book.publication_year}");
-}
-
-//Testing:
 
 
 public class Node
