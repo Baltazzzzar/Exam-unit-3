@@ -336,7 +336,7 @@ List<Books> SortBooksByAuthorLastName(string order)
     return sortedBooks;
 }
 
-void PrintGroupedBooksByAuthor(List<Books> sortedBooks)
+void PrintGroupedBooksByAuthorLastName(List<Books> sortedBooks)
 {
     string currentAuthor = sortedBooks[0].author.Split(" ")[1];
     if (currentAuthor == "(Translated")
@@ -374,6 +374,59 @@ void PrintGroupedBooksByAuthor(List<Books> sortedBooks)
     Console.WriteLine("");
 }
 
+void PrintGroupedBooksByAuthorFirstName(List<Books> sortedBooks)
+{
+    string currentAuthor = sortedBooks[0].author.Split(" ")[0];
+    Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor}{ANSICodes.Reset}");
+    foreach (Books book in sortedBooks)
+    {
+        if (currentAuthor != book.author.Split(" ")[0])
+        {
+            currentAuthor = book.author.Split(" ")[0];
+            Console.WriteLine("");
+            Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor} : {ANSICodes.Reset}");
+            Console.Write($"{book.title} , ");
+        }
+        else
+        {
+            Console.Write($"{book.title} , ");
+        }
+    }
+    Console.WriteLine("");
+}
+
+List<Books> SortBooksAlphabeticallyByTitle(string order)
+{
+    List<Books> sortedBooks = new List<Books>(booksJsonData);
+
+    for (int i = 0; i < sortedBooks.Count; i++)
+    {
+        for (int j = i + 1; j < sortedBooks.Count; j++)
+        {
+            if (order == "ascending")
+            {
+                if (sortedBooks[i].title.CompareTo(sortedBooks[j].title) > 0)
+                {
+                    Books temp = sortedBooks[i];
+                    sortedBooks[i] = sortedBooks[j];
+                    sortedBooks[j] = temp;
+                }
+            }
+            else if (order == "descending")
+            {
+                if (sortedBooks[i].title.CompareTo(sortedBooks[j].title) < 0)
+                {
+                    Books temp = sortedBooks[i];
+                    sortedBooks[i] = sortedBooks[j];
+                    sortedBooks[j] = temp;
+                }
+            }
+        }
+    }
+    return sortedBooks;
+}
+
+
 
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
@@ -385,25 +438,24 @@ int numberOfBooksWrittenBefore2004 = CountNumberOfBooksPublishedBefore2004(books
 Console.WriteLine($"{ANSICodes.Colors.Red} Number of books written before 2004 : {ANSICodes.Reset}" + numberOfBooksWrittenBefore2004);
 List<string> isbnNumbers = FindISBNNumbersFromAuthor("Terry Pratchett");
 Console.WriteLine($"{ANSICodes.Colors.Magenta} ISBN numbers of books written by Terry Pratchett : {ANSICodes.Reset}" + string.Join(", ", isbnNumbers));
-List<Books> sortedBooksByFirstName = SortBooksByAuthorFirstName("ascending");
+List<Books> sortedBooksByFirstName = SortBooksByAuthorFirstName("descending");
 Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author first name : {ANSICodes.Reset}");
 foreach (var book in sortedBooksByFirstName)
 {
     Console.WriteLine($"{book.author} , {book.title}");
 }
 List<Books> sortedBooksByLastName = SortBooksByAuthorLastName("ascending");
-Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author last name : {ANSICodes.Reset}");
-PrintGroupedBooksByAuthor(SortBooksByAuthorLastName("ascending"));
+Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author last name : {ANSICodes.Reset}");
+PrintGroupedBooksByAuthorLastName(SortBooksByAuthorLastName("ascending"));
+Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
+PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
 
-
-// Testing
-
-Testing.Test(4, Square(2), "Square of 2");
-Testing.Test(9, Root(81), "Root of 81");
-Testing.Test(8, Cube(2), "Cube of 2");
-Testing.Test(Math.PI * 4, AreaOfCircle(2), "Area of Circle with radius 2");
-Testing.Test(50.8, InchToMm(2), "2 inch to mm");
-Testing.Test("Good Day, John!", Greet("John"), "Greet John");
+List<Books> sortedBooksByTitle = SortBooksAlphabeticallyByTitle("ascending");
+Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.Reset}");
+foreach (var book in sortedBooksByTitle)
+{
+    Console.WriteLine($"{book.title} , {book.author}");
+}
 
 public class Node
 {
