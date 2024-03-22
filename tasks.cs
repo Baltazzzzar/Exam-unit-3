@@ -183,6 +183,18 @@ int CountNumberOfBooksPublishedAfter1992(Books[] books)
     return count;
 }
 
+int CountNumberOfBooksPublishedBefore2004(Books[] books)
+{
+    int count = 0;
+    foreach (Books book in books)
+    {
+        if (book.publication_year < 2004)
+        {
+            count++;
+        }
+    }
+    return count;
+}
 
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
