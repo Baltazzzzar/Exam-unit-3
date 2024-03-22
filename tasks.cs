@@ -196,13 +196,30 @@ int CountNumberOfBooksPublishedBefore2004(Books[] books)
     return count;
 }
 
+List<string> FindISBNNumbersFromAuthor(string author)
+{
+    List<string> isbnNumbers = new List<string>();
+    foreach (Books book in booksJsonData)
+    {
+        if (book.author == author)
+        {
+            isbnNumbers.Add(book.isbn);
+        }
+    }
+    return isbnNumbers;
+}
+
+
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
 List<string> booksWithAuthorsWithTIntheirName = FindBooksWithAuthorsWithTIntheirName(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Green} Books written by author with T in their name : {ANSICodes.Reset}" + string.Join(", ", booksWithAuthorsWithTIntheirName));
 int numberOfBooksWrittenAfter1994 = CountNumberOfBooksPublishedAfter1992(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Blue} Number of books written after 1994 : {ANSICodes.Reset}" + numberOfBooksWrittenAfter1994);
-
+int numberOfBooksWrittenBefore2004 = CountNumberOfBooksPublishedBefore2004(booksJsonData);
+Console.WriteLine($"{ANSICodes.Colors.Red} Number of books written before 2004 : {ANSICodes.Reset}" + numberOfBooksWrittenBefore2004);
+List<string> isbnNumbers = FindISBNNumbersFromAuthor("Terry Pratchett");
+Console.WriteLine($"{ANSICodes.Colors.Magenta} ISBN numbers of books written by Terry Pratchett : {ANSICodes.Reset}" + string.Join(", ", isbnNumbers));
 
 
 
