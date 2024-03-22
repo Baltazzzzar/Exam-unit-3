@@ -16,63 +16,19 @@ string fileName = "arrays.json";
 string jsonString = File.ReadAllText(fileName);
 JsonElement arraysJsonData = JsonSerializer.Deserialize<JsonElement>(jsonString);
 
-
 List<int> flattenedArray = flattenArrayFunction.FlattenJaggedArray(arraysJsonData);
 Console.WriteLine(string.Join(", ", flattenedArray));
 
 
 // Task 3
-
+Functions.SearchFunctions searchFunctions = new Functions.SearchFunctions();
 fileName = "nodes.json";
 jsonString = File.ReadAllText(fileName);
 Node nodesJsonData = JsonSerializer.Deserialize<Node>(jsonString);
 
-int FindDeepestLevel(Node node)
-{
-    if (node == null)
-    {
-        return 0;
-    }
-    else
-    {
-        int leftLevel = FindDeepestLevel(node.left);
-        int rightLevel = FindDeepestLevel(node.right);
-        if (leftLevel > rightLevel)
-        {
-            return leftLevel + 1;
-        }
-        else
-        {
-            return rightLevel + 1;
-        }
-    }
-}
-int CalculateSumOfNodesValue(Node node)
-{
-    if (node == null)
-    {
-        return 0;
-    }
-    else
-    {
-        return node.value + CalculateSumOfNodesValue(node.right) + CalculateSumOfNodesValue(node.left);
-    }
-}
-int CountNodes(Node node)
-{
-    if (node == null)
-    {
-        return 0;
-    }
-    else
-    {
-        return 1 + CountNodes(node.right) + CountNodes(node.left);
-    }
-}
-
-int deepestLevel = FindDeepestLevel(nodesJsonData);
-int sumOfNodes = CalculateSumOfNodesValue(nodesJsonData);
-int nodesCount = CountNodes(nodesJsonData);
+int sumOfNodes = mathFunctions.CalculateSumOfNodesValue(nodesJsonData);
+int nodesCount = mathFunctions.CountNodes(nodesJsonData);
+int deepestLevel = searchFunctions.FindDeepestLevel(nodesJsonData);
 Console.WriteLine($"Deepest level is: {deepestLevel}");
 Console.WriteLine($"Sum of nodes is: {sumOfNodes}");
 Console.WriteLine($"Number of nodes is: {nodesCount}");
