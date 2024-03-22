@@ -170,10 +170,26 @@ List<string> FindBooksWithAuthorsWithTIntheirName(Books[] books)
     return booksWithAuthorsWithTIntheirName;
 }
 
+int CountNumberOfBooksPublishedAfter1992(Books[] books)
+{
+    int count = 0;
+    foreach (Books book in books)
+    {
+        if (book.publication_year > 1992)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
 List<string> booksWithAuthorsWithTIntheirName = FindBooksWithAuthorsWithTIntheirName(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Green} Books written by author with T in their name : {ANSICodes.Reset}" + string.Join(", ", booksWithAuthorsWithTIntheirName));
+int numberOfBooksWrittenAfter1994 = CountNumberOfBooksPublishedAfter1992(booksJsonData);
+Console.WriteLine($"{ANSICodes.Colors.Blue} Number of books written after 1994 : {ANSICodes.Reset}" + numberOfBooksWrittenAfter1994);
 
 
 
@@ -197,6 +213,6 @@ public class Books
 {
     public string title { get; set; }
     public string author { get; set; }
-    public int year { get; set; }
+    public int publication_year { get; set; }
     public string isbn { get; set; }
 }
