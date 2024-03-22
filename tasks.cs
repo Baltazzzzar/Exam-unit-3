@@ -90,10 +90,38 @@ int FindDeepestLevel(Node node)
         }
     }
 }
-
+int SumOfNodes(Node node)
+{
+    if (node == null)
+    {
+        return 0;
+    }
+    else
+    {
+        return node.value + SumOfNodes(node.right) + SumOfNodes(node.left);
+    }
+}
+int FindAmountOfNodes(Node node)
+{
+    if (node == null)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1 + FindAmountOfNodes(node.right) + FindAmountOfNodes(node.left);
+    }
+}
 
 int deepestLevel = FindDeepestLevel(nodesJsonData);
+int sumOfNodes = SumOfNodes(nodesJsonData);
+int nodesCount = FindAmountOfNodes(nodesJsonData);
 Console.WriteLine($"Deepest level is: {deepestLevel}");
+Console.WriteLine($"Sum of nodes is: {sumOfNodes}");
+Console.WriteLine($"Number of nodes is: {nodesCount}");
+
+
+
 
 // Testing
 
@@ -107,7 +135,6 @@ Testing.Test("Good Day, John!", Greet("John"), "Greet John");
 public class Node
 {
     public int value { get; set; }
-    public int level { get; set; }
     public Node left { get; set; }
     public Node right { get; set; }
 }
