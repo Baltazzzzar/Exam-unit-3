@@ -166,35 +166,82 @@ namespace Program
                 case 6:
                     {
                     Console.Clear();
-                    List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "descending");
-                    Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
-                    task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+                    Console.WriteLine("Choose between the following options: \n 1. Ascending \n 2. Descending \n");
+                    int input = int.Parse(Console.ReadLine());
+                    if(input == 1)
+                    {
+                        List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "ascending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
+                        task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+                    }
+                    else
+                    {
+                        List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "descending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
+                        task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+                    }
                     break;
                     }   
                 case 7:
                     {
                     Console.Clear();
-                    List<Books> sortedBooksByLastName = task4Functions.SortBooksByAuthorLastName(booksJsonData, "ascending");
-                    Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author last name : {ANSICodes.Reset}");
-                    task4Functions.PrintGroupedBooksByAuthorLastName(sortedBooksByLastName);
+                    Console.WriteLine("Choose between the following options: \n 1. Ascending \n 2. Descending \n");
+                    int input = int.Parse(Console.ReadLine());
+                    if(input == 1)
+                    {
+                        List<Books> sortedBooksByLastName = task4Functions.SortBooksByAuthorLastName(booksJsonData, "ascending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author last name : {ANSICodes.Reset}");
+                        task4Functions.PrintGroupedBooksByAuthorLastName(sortedBooksByLastName);
+                    }
+                    else
+                    {
+                        List<Books> sortedBooksByLastName = task4Functions.SortBooksByAuthorLastName(booksJsonData, "descending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author last name : {ANSICodes.Reset}");
+                        task4Functions.PrintGroupedBooksByAuthorLastName(sortedBooksByLastName);
+                    }
                     break;
                     }
                 case 8:
                     {
                     Console.Clear();
-                    List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "ascending");
-                    Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
-                    task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+                    Console.WriteLine("Choose between the following options: \n 1. Ascending \n 2. Descending \n");
+                    int input = int.Parse(Console.ReadLine());
+                    if(input == 1)
+                    {
+                        List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "ascending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
+                        task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+                    }
+                    else
+                    {
+                        List<Books> sortedBooksByFirstName = task4Functions.SortBooksByAuthorFirstName(booksJsonData, "descending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Grouped books by author first name : {ANSICodes.Reset}");
+                        task4Functions.PrintGroupedBooksByAuthorFirstName(sortedBooksByFirstName);
+                    }
                     break;
                     }
                 case 9:
                     {
                     Console.Clear();
-                    List<Books> sortedBooksByTitle = task4Functions.SortBooksAlphabeticallyByTitle(booksJsonData, "ascending");
-                    Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.Reset}");
-                    foreach (Books book in sortedBooksByTitle)
+                    Console.WriteLine("Choose between the following options: \n 1. Ascending \n 2. Descending \n");
+                    int input = int.Parse(Console.ReadLine());
+                    if(input == 1)
                     {
-                        Console.WriteLine($"{book.title}");
+                        List<Books> sortedBooksByTitle = task4Functions.SortBooksAlphabeticallyByTitle(booksJsonData, "ascending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.Reset}");
+                        foreach (Books book in sortedBooksByTitle)
+                        {
+                            Console.WriteLine($"{book.title}");
+                        }
+                    }
+                    else
+                    {
+                        List<Books> sortedBooksByTitle = task4Functions.SortBooksAlphabeticallyByTitle(booksJsonData, "ascending");
+                        Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.Reset}");
+                        foreach (Books book in sortedBooksByTitle)
+                        {
+                            Console.WriteLine($"{book.title}");
+                        }
                     }
                     break;
                     }
