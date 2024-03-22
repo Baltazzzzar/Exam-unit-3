@@ -336,6 +336,35 @@ List<Books> SortBooksByAuthorLastName(string order)
     return sortedBooks;
 }
 
+void PrintGroupedBooksByAuthor(List<Books> sortedBooks)
+{
+    string currentAuthor = sortedBooks[0].author.Split(" ")[1];
+    if (currentAuthor == "(Translated")
+    {
+        Console.WriteLine($"{currentAuthor}");
+    }
+    else
+    {
+        Console.WriteLine($"{currentAuthor}");
+    }
+    foreach (Books book in sortedBooks)
+    {
+        if (currentAuthor != book.author.Split(" ")[1])
+        {
+            if (book.author.Split(" ")[1] == "(Translated")
+            {
+                currentAuthor = book.author.Split(" ")[0];
+                Console.WriteLine($"{currentAuthor}");
+            }
+            else
+            {
+                currentAuthor = book.author.Split(" ")[1];
+                Console.WriteLine($"{currentAuthor}");
+            }
+        }
+        Console.WriteLine($"    {book.title}");
+    }
+}
 
 
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
@@ -356,10 +385,7 @@ foreach (var book in sortedBooksByFirstName)
 }
 List<Books> sortedBooksByLastName = SortBooksByAuthorLastName("ascending");
 Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author last name : {ANSICodes.Reset}");
-foreach (var book in sortedBooksByLastName)
-{
-    Console.WriteLine($"{book.author} , {book.title}");
-}
+PrintGroupedBooksByAuthor(SortBooksByAuthorLastName("ascending"));
 
 
 // Testing
