@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Text;
 using System.Text.Json;
 using AnsiTools;
 
@@ -209,6 +210,43 @@ List<string> FindISBNNumbersFromAuthor(string author)
     return isbnNumbers;
 }
 
+List<Books> SortBooksByAuthorFirstName(string order)
+{
+    List<Books> sortedBooks = new List<Books>(booksJsonData);
+    if (order == "ascending")
+    {
+        for (int i = 0; i < sortedBooks.Count; i++)
+        {
+            for (int j = i + 1; j < sortedBooks.Count; j++)
+            {
+                if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) > 0)
+                {
+                    Books temp = sortedBooks[i];
+                    sortedBooks[i] = sortedBooks[j];
+                    sortedBooks[j] = temp;
+                }
+            }
+        }
+    }
+    else if (order == "descending")
+    {
+        for (int i = 0; i < sortedBooks.Count; i++)
+        {
+            for (int j = i + 1; j < sortedBooks.Count; j++)
+            {
+                if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) < 0)
+                {
+                    Books temp = sortedBooks[i];
+                    sortedBooks[i] = sortedBooks[j];
+                    sortedBooks[j] = temp;
+                }
+            }
+        }
+    }
+    return sortedBooks;
+}
+
+
 
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
 Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
@@ -220,7 +258,12 @@ int numberOfBooksWrittenBefore2004 = CountNumberOfBooksPublishedBefore2004(books
 Console.WriteLine($"{ANSICodes.Colors.Red} Number of books written before 2004 : {ANSICodes.Reset}" + numberOfBooksWrittenBefore2004);
 List<string> isbnNumbers = FindISBNNumbersFromAuthor("Terry Pratchett");
 Console.WriteLine($"{ANSICodes.Colors.Magenta} ISBN numbers of books written by Terry Pratchett : {ANSICodes.Reset}" + string.Join(", ", isbnNumbers));
-
+List<Books> sortedBooks = SortBooksByAuthorFirstName("asc");
+Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author first name : {ANSICodes.Reset}");
+foreach (var book in sortedBooks)
+{
+    Console.WriteLine($"{book.author} , {book.title}");
+}
 
 
 // Testing
