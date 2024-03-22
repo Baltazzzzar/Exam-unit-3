@@ -11,35 +11,13 @@ Functions.MathFunctions mathFunctions = new Functions.MathFunctions();
 
 
 // Task 2
-
+Functions.FlattenArrayFunction flattenArrayFunction = new Functions.FlattenArrayFunction();
 string fileName = "arrays.json";
 string jsonString = File.ReadAllText(fileName);
 JsonElement arraysJsonData = JsonSerializer.Deserialize<JsonElement>(jsonString);
 
 
-List<int> FlattenJaggedArray(JsonElement jaggedArray)
-{
-    List<int> flattenedArray = new List<int>();
-    if (jaggedArray.ValueKind == JsonValueKind.Array)
-    {
-        foreach (var item in jaggedArray.EnumerateArray())
-        {
-            List<int> sublist = FlattenJaggedArray(item);
-            foreach (int number in sublist)
-            {
-                flattenedArray.Add(number);
-            }
-        }
-    }
-    else if (jaggedArray.ValueKind == JsonValueKind.Number)
-    {
-        int number = int.Parse(jaggedArray.ToString());
-        flattenedArray.Add(number);
-    }
-    return flattenedArray;
-}
-
-List<int> flattenedArray = FlattenJaggedArray(arraysJsonData);
+List<int> flattenedArray = flattenArrayFunction.FlattenJaggedArray(arraysJsonData);
 Console.WriteLine(string.Join(", ", flattenedArray));
 
 
