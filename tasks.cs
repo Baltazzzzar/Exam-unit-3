@@ -341,11 +341,11 @@ void PrintGroupedBooksByAuthor(List<Books> sortedBooks)
     string currentAuthor = sortedBooks[0].author.Split(" ")[1];
     if (currentAuthor == "(Translated")
     {
-        Console.WriteLine($"{currentAuthor}");
+        Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor}{ANSICodes.Reset}");
     }
     else
     {
-        Console.WriteLine($"{currentAuthor}");
+        Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor}{ANSICodes.Reset}");
     }
     foreach (Books book in sortedBooks)
     {
@@ -354,16 +354,24 @@ void PrintGroupedBooksByAuthor(List<Books> sortedBooks)
             if (book.author.Split(" ")[1] == "(Translated")
             {
                 currentAuthor = book.author.Split(" ")[0];
-                Console.WriteLine($"{currentAuthor}");
+                Console.WriteLine("");
+                Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor} : {ANSICodes.Reset}");
+                Console.Write($"{book.title} , ");
             }
             else
             {
                 currentAuthor = book.author.Split(" ")[1];
-                Console.WriteLine($"{currentAuthor}");
+                Console.WriteLine("");
+                Console.Write($"{ANSICodes.Colors.Cyan}{currentAuthor} : {ANSICodes.Reset}");
+                Console.Write($"{book.title} , ");
             }
         }
-        Console.WriteLine($"    {book.title}");
+        else
+        {
+            Console.Write($"{book.title} , ");
+        }
     }
+    Console.WriteLine("");
 }
 
 
