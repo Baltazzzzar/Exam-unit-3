@@ -426,6 +426,36 @@ List<Books> SortBooksAlphabeticallyByTitle(string order)
     return sortedBooks;
 }
 
+List<Books> SortBooksChronologicallyByPublicationYear(string order)
+{
+    List<Books> sortedBooks = new List<Books>(booksJsonData);
+
+    for (int i = 0; i < sortedBooks.Count; i++)
+    {
+        for (int j = i + 1; j < sortedBooks.Count; j++)
+        {
+            if (order == "ascending")
+            {
+                if (sortedBooks[i].publication_year > sortedBooks[j].publication_year)
+                {
+                    Books temp = sortedBooks[i];
+                    sortedBooks[i] = sortedBooks[j];
+                    sortedBooks[j] = temp;
+                }
+            }
+            else if (order == "descending")
+            {
+                if (sortedBooks[i].publication_year < sortedBooks[j].publication_year)
+                {
+                    Books temp = sortedBooks[i];
+                    sortedBooks[i] = sortedBooks[j];
+                    sortedBooks[j] = temp;
+                }
+            }
+        }
+    }
+    return sortedBooks;
+}
 
 
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
@@ -455,6 +485,12 @@ Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by title : {ANSICodes.R
 foreach (var book in sortedBooksByTitle)
 {
     Console.WriteLine($"{book.title} , {book.author}");
+}
+List<Books> sortedBooksByPublicationYear = SortBooksChronologicallyByPublicationYear("ascending");
+Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by publication year : {ANSICodes.Reset}");
+foreach (var book in sortedBooksByPublicationYear)
+{
+    Console.WriteLine($"{book.title} , {book.author} , {book.publication_year}");
 }
 
 public class Node
