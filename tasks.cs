@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text.Json;
+using AnsiTools;
 
 // Task 1
 
@@ -148,8 +150,32 @@ List<string> FindBooksStartingWithThe(Books[] books)
     return booksStartingWithThe;
 }
 
+List<string> FindBooksWithAuthorsWithTIntheirName(Books[] books)
+{
+    List<string> booksWithAuthorsWithTIntheirName = new List<string>();
+    foreach (Books book in books)
+    {
+        for (int i = 0; i < book.author.Length; i++)
+        {
+            if (book.author[i] == 't' || book.author[i] == 'T')
+            {
+                booksWithAuthorsWithTIntheirName.Add(book.title);
+            }
+            else if (book.author[i] == '(')
+            {
+                break;
+            }
+        }
+    }
+    return booksWithAuthorsWithTIntheirName;
+}
+
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
-Console.WriteLine(string.Join(", ", booksStartingWithThe));
+Console.WriteLine($"{ANSICodes.Colors.Yellow} Books starting with the : {ANSICodes.Reset}" + string.Join(", ", booksStartingWithThe));
+List<string> booksWithAuthorsWithTIntheirName = FindBooksWithAuthorsWithTIntheirName(booksJsonData);
+Console.WriteLine($"{ANSICodes.Colors.Green} Books written by author with T in their name : {ANSICodes.Reset}" + string.Join(", ", booksWithAuthorsWithTIntheirName));
+
+
 
 
 // Testing
