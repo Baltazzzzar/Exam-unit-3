@@ -246,6 +246,96 @@ List<Books> SortBooksByAuthorFirstName(string order)
     return sortedBooks;
 }
 
+List<Books> SortBooksByAuthorLastName(string order)
+{
+    List<Books> sortedBooks = new List<Books>(booksJsonData);
+    for (int i = 0; i < sortedBooks.Count; i++)
+    {
+        for (int j = i + 1; j < sortedBooks.Count; j++)
+        {
+            if (order == "ascending")
+            {
+                if (sortedBooks[i].author.Split(' ')[1] == "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[1]) > 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+                if (sortedBooks[j].author.Split(' ')[1] == "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[0]) > 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+                if (sortedBooks[i].author.Split(' ')[1] == "(Translated" && sortedBooks[j].author.Split(' ')[1] == "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) > 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+                if (sortedBooks[i].author.Split(' ')[1] != "(Translated" && sortedBooks[j].author.Split(' ')[1] != "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[1]) > 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+            }
+            else if (order == "descending")
+            {
+                if (sortedBooks[i].author.Split(' ')[1] == "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[1]) < 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+                if (sortedBooks[j].author.Split(' ')[1] == "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[0]) < 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+                if (sortedBooks[i].author.Split(' ')[1] == "(Translated" && sortedBooks[j].author.Split(' ')[1] == "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[0].CompareTo(sortedBooks[j].author.Split(" ")[0]) < 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+                if (sortedBooks[i].author.Split(' ')[1] != "(Translated" && sortedBooks[j].author.Split(' ')[1] != "(Translated")
+                {
+                    if (sortedBooks[i].author.Split(" ")[1].CompareTo(sortedBooks[j].author.Split(" ")[1]) < 0)
+                    {
+                        Books temp = sortedBooks[i];
+                        sortedBooks[i] = sortedBooks[j];
+                        sortedBooks[j] = temp;
+                    }
+                }
+            }
+        }
+    }
+    return sortedBooks;
+}
+
 
 
 List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
@@ -258,9 +348,15 @@ int numberOfBooksWrittenBefore2004 = CountNumberOfBooksPublishedBefore2004(books
 Console.WriteLine($"{ANSICodes.Colors.Red} Number of books written before 2004 : {ANSICodes.Reset}" + numberOfBooksWrittenBefore2004);
 List<string> isbnNumbers = FindISBNNumbersFromAuthor("Terry Pratchett");
 Console.WriteLine($"{ANSICodes.Colors.Magenta} ISBN numbers of books written by Terry Pratchett : {ANSICodes.Reset}" + string.Join(", ", isbnNumbers));
-List<Books> sortedBooks = SortBooksByAuthorFirstName("asc");
+List<Books> sortedBooksByFirstName = SortBooksByAuthorFirstName("ascending");
 Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author first name : {ANSICodes.Reset}");
-foreach (var book in sortedBooks)
+foreach (var book in sortedBooksByFirstName)
+{
+    Console.WriteLine($"{book.author} , {book.title}");
+}
+List<Books> sortedBooksByLastName = SortBooksByAuthorLastName("ascending");
+Console.WriteLine($"{ANSICodes.Colors.Cyan} Sorted books by author last name : {ANSICodes.Reset}");
+foreach (var book in sortedBooksByLastName)
 {
     Console.WriteLine($"{book.author} , {book.title}");
 }
