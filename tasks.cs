@@ -90,7 +90,7 @@ int FindDeepestLevel(Node node)
         }
     }
 }
-int SumOfNodes(Node node)
+int CalculateSumOfNodesValue(Node node)
 {
     if (node == null)
     {
@@ -98,10 +98,10 @@ int SumOfNodes(Node node)
     }
     else
     {
-        return node.value + SumOfNodes(node.right) + SumOfNodes(node.left);
+        return node.value + CalculateSumOfNodesValue(node.right) + CalculateSumOfNodesValue(node.left);
     }
 }
-int FindAmountOfNodes(Node node)
+int CountNodes(Node node)
 {
     if (node == null)
     {
@@ -109,18 +109,47 @@ int FindAmountOfNodes(Node node)
     }
     else
     {
-        return 1 + FindAmountOfNodes(node.right) + FindAmountOfNodes(node.left);
+        return 1 + CountNodes(node.right) + CountNodes(node.left);
     }
 }
 
 int deepestLevel = FindDeepestLevel(nodesJsonData);
-int sumOfNodes = SumOfNodes(nodesJsonData);
-int nodesCount = FindAmountOfNodes(nodesJsonData);
+int sumOfNodes = CalculateSumOfNodesValue(nodesJsonData);
+int nodesCount = CountNodes(nodesJsonData);
 Console.WriteLine($"Deepest level is: {deepestLevel}");
 Console.WriteLine($"Sum of nodes is: {sumOfNodes}");
 Console.WriteLine($"Number of nodes is: {nodesCount}");
 
 
+// Task 4
+
+fileName = "books.json";
+jsonString = File.ReadAllText(fileName);
+Books[] booksJsonData = JsonSerializer.Deserialize<Books[]>(jsonString);
+
+List<string> FindBooksStartingWithThe(Books[] books)
+{
+    List<string> booksStartingWithThe = new List<string>();
+    string the = "The";
+    foreach (Books book in books)
+    {
+        for (int i = 0; i < the.Length; i++)
+        {
+            if (the[i] != book.title[i])
+            {
+                break;
+            }
+            if (i == the.Length - 1)
+            {
+                booksStartingWithThe.Add(book.title);
+            }
+        }
+    }
+    return booksStartingWithThe;
+}
+
+List<string> booksStartingWithThe = FindBooksStartingWithThe(booksJsonData);
+Console.WriteLine(string.Join(", ", booksStartingWithThe));
 
 
 // Testing
@@ -137,4 +166,11 @@ public class Node
     public int value { get; set; }
     public Node left { get; set; }
     public Node right { get; set; }
+}
+public class Books
+{
+    public string title { get; set; }
+    public string author { get; set; }
+    public int year { get; set; }
+    public string isbn { get; set; }
 }
