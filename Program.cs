@@ -17,7 +17,7 @@ namespace Program
 
             // Task 2
             Task2Function task2Function = new Task2Function();
-            string fileName = "arrays.json";
+            string fileName = "jsonFiles/arrays.json";
             string jsonString = File.ReadAllText(fileName);
             JsonElement arraysJsonData = JsonSerializer.Deserialize<JsonElement>(jsonString);
 
@@ -27,7 +27,7 @@ namespace Program
 
             // Task 3
             Task3Functions task3Functions = new Task3Functions();
-            fileName = "nodes.json";
+            fileName = "jsonFiles/nodes.json";
             jsonString = File.ReadAllText(fileName);
             Node nodesJsonData = JsonSerializer.Deserialize<Node>(jsonString);
 
@@ -41,7 +41,7 @@ namespace Program
 
             // Task 4
             Task4Functions task4Functions = new Task4Functions();
-            fileName = "books.json";
+            fileName = "jsonFiles/books.json";
             jsonString = File.ReadAllText(fileName);
             Books[] booksJsonData = JsonSerializer.Deserialize<Books[]>(jsonString);
 
