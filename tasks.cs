@@ -4,34 +4,10 @@ using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using AnsiTools;
+using Functions;
 
 // Task 1
-
-double Square(double numberToSquare)
-{
-    return numberToSquare * numberToSquare;
-}
-double Root(double numberToRoot)
-{
-    return Math.Sqrt(numberToRoot);
-}
-double Cube(double numberToCube)
-{
-    return numberToCube * numberToCube * numberToCube;
-}
-double AreaOfCircle(double radius)
-{
-    return Math.PI * radius * radius;
-}
-double InchToMm(double inch)
-{
-    return inch * 25.4;
-}
-string Greet(string name)
-{
-    return $"Good Day, {name}!";
-}
-
+Functions.MathFunctions mathFunctions = new Functions.MathFunctions();
 
 
 // Task 2
@@ -492,6 +468,9 @@ foreach (var book in sortedBooksByPublicationYear)
 {
     Console.WriteLine($"{book.title} , {book.author} , {book.publication_year}");
 }
+
+//Testing:
+
 
 public class Node
 {
